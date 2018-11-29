@@ -20,7 +20,7 @@
             android:textSize="30sp" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/scheduleNameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -28,7 +28,7 @@
             android:inputType="textPersonName" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/onceCheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="１回のみ" />
@@ -39,49 +39,49 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/checkBox2"
+                android:id="@+id/sun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="日" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/mon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="月" />
 
             <CheckBox
-                android:id="@+id/checkBox4"
+                android:id="@+id/tue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="火" />
 
             <CheckBox
-                android:id="@+id/checkBox5"
+                android:id="@+id/wed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="水" />
 
             <CheckBox
-                android:id="@+id/checkBox6"
+                android:id="@+id/thu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="木" />
 
             <CheckBox
-                android:id="@+id/checkBox7"
+                android:id="@+id/fri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="金" />
 
             <CheckBox
-                android:id="@+id/checkBox8"
+                android:id="@+id/sat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -100,6 +100,7 @@
             android:id="@+id/typeGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkedButton="@+id/templateButton"
             android:orientation="horizontal">
 
             <RadioButton
@@ -127,94 +128,95 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:checkedButton="@+id/J1T"
                 android:visibility="visible">
 
                 <RadioButton
-                    android:id="@+id/radioButton14"
+                    android:id="@+id/J1T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環１時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton15"
+                    android:id="@+id/J2T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環２時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton16"
+                    android:id="@+id/J3T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環３時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton17"
+                    android:id="@+id/J4T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環４時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton18"
+                    android:id="@+id/J5T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環５時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton19"
+                    android:id="@+id/J6T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環６時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton20"
+                    android:id="@+id/J7T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環７時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton21"
+                    android:id="@+id/J8T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="情環８時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton22"
+                    android:id="@+id/S1T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="千住１時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton23"
+                    android:id="@+id/S2T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="千住２時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton24"
+                    android:id="@+id/S3T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="千住３時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton25"
+                    android:id="@+id/S4T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="千住４時限" />
 
                 <RadioButton
-                    android:id="@+id/radioButton26"
+                    android:id="@+id/S5T"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -222,6 +224,7 @@
             </RadioGroup>
 
             <LinearLayout
+                android:id="@+id/pickerGroup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -263,7 +266,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"

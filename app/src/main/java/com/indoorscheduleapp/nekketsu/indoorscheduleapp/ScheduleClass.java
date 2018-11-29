@@ -7,7 +7,8 @@ public class ScheduleClass {
     private String name;
     private String roomName;
     private int type = 0; //0:講義、1:スケジュール（ゼミなど）
-
+    private boolean isOnce = false; //１回のみかどうか
+    //isOnceがFalseのときつかうよ
     private boolean[] day = new boolean[7]; //日～土　何曜日に発動するのか
 
     //type=0のとき使用
@@ -21,10 +22,7 @@ public class ScheduleClass {
 
     private boolean isClass = false;
 
-    public ScheduleClass()
-    {
-
-    }
+    public ScheduleClass() {}
 
     public void setName(String name)
     {
@@ -51,6 +49,13 @@ public class ScheduleClass {
     public int getType()
     {
         return type;
+    }
+
+    public void setOnce(boolean once) {
+        isOnce = once;
+    }
+    public boolean isOnce() {
+        return isOnce;
     }
 
     public void setDay(boolean[] day)
