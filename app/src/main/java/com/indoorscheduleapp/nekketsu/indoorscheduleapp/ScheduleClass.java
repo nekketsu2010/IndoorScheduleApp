@@ -1,6 +1,7 @@
 package com.indoorscheduleapp.nekketsu.indoorscheduleapp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ScheduleClass {
@@ -15,8 +16,8 @@ public class ScheduleClass {
     private String timeTable; //千住１限　といった時間割の文字列
 
     //type=1のとき使用
-    private Date beginTime = new Date();
-    private Date endTime = new Date();
+    private Calendar beginTime = Calendar.getInstance();
+    private Calendar endTime = Calendar.getInstance();
 
     private ArrayList<DocumentClass> documents = new ArrayList<>(); //資料のリスト
 
@@ -81,20 +82,20 @@ public class ScheduleClass {
         return timeTable;
     }
 
-    public void setBeginTime(Date beginTime)
+    public void setBeginTime(Calendar beginTime)
     {
         this.beginTime = beginTime;
     }
-    public Date getBeginTime()
+    public Calendar getBeginTime()
     {
         return beginTime;
     }
 
-    public void setEndTime(Date endTime)
+    public void setEndTime(Calendar endTime)
     {
         this.endTime = endTime;
     }
-    public Date getEndTime()
+    public Calendar getEndTime()
     {
         return endTime;
     }
