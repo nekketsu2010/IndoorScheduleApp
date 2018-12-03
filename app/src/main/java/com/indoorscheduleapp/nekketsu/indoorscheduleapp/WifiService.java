@@ -49,6 +49,9 @@ public class WifiService extends Service {
         // 検索時に呼ばれる BroadcastReceiver を登録
         registerReceiver(changeWifi,
                 new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        WifiManager wm = (WifiManager)getApplicationContext().getSystemService(WIFI_SERVICE);
+        wm.startScan();
+
         int requestCode = intent.getIntExtra("REQUEST_CODE",0);
         Context context = getApplicationContext();
         String channelId = "default";
@@ -118,8 +121,9 @@ public class WifiService extends Service {
 
 
             // 検索時に呼ばれる BroadcastReceiver を登録
-//            registerReceiver(changeWifi,
-//                    new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+            registerReceiver(changeWifi,
+                    new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+            wm.startScan();
         }
     };
 
