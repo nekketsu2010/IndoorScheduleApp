@@ -6,24 +6,29 @@ import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity{
 
     ListView listView;
+    ArrayAdapter<ScheduleClass> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("更新", "初回の更新だよ");
         listView = findViewById(R.id.listView);
-        ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
+        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        Log.d("更新", "リストを更新するよ");
+        adapter.notifyDataSetChanged();
         ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
