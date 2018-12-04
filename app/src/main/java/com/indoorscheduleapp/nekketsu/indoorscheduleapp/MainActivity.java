@@ -19,7 +19,6 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity{
 
     ListView listView;
-    ArrayAdapter<ScheduleClass> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,8 @@ public class MainActivity extends AppCompatActivity{
 
         Log.d("更新", "初回の更新だよ");
         listView = findViewById(R.id.listView);
-        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
+        ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
+//        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         Log.d("更新", "リストを更新するよ");
-        adapter.notifyDataSetChanged();
+//        adapter.notifyDataSetChanged();
         ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);

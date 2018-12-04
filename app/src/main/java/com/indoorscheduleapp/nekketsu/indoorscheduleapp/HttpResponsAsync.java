@@ -16,7 +16,7 @@ public class HttpResponsAsync extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        String urlSt = "http://a0f90791.ngrok.io/sample-game-server/libsvm/predict";
+        String urlSt = "http://d0259c06.ngrok.io/sample-game-server/libsvm/predict";
 
         HttpURLConnection httpConn = null;
         StringBuilder sb = new StringBuilder();
