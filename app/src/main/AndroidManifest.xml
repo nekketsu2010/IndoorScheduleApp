@@ -30,7 +30,8 @@
         </activity>
         <activity android:name=".UnipaActivity" />
         <activity android:name=".ScheduleRegistActivity" />
-        <activity android:name=".EditScheduleActivity"></activity>
+        <activity android:name=".EditScheduleActivity" />
+        <activity android:name=".ScheduleRegistTimeActivity"></activity>
     </application>
 
 </manifest>

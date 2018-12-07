@@ -4,6 +4,7 @@ import android.os.Debug;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -71,20 +72,51 @@ public class UnipaActivity extends AppCompatActivity {
                                         //もしないときこうなります
                                         if(UserData.scheduleClasses.size()==0){
                                             ScheduleClass schedule = new ScheduleClass();
+                                            TimeClass timeClass = new TimeClass();
+                                            Calendar[] time = timeTableTime(TimeName);
+                                            timeClass.setBeginTime(time[0]);
+                                            timeClass.setEndTime(time[1]);
                                             schedule.setName(Name);
-                                            schedule.setOneDay(true, i);
+                                            timeClass.setOneDay(true, i);
+                                            schedule.addTimes(timeClass);
                                             UserData.scheduleClasses.add(schedule);
+                                            continue;
                                         }
                                         for(int k=0; k<UserData.scheduleClasses.size(); k++){
                                             if(UserData.scheduleClasses.get(k).getName().equals(Name)){
-                                                UserData.scheduleClasses.get(k).setOneDay(true, i);
+                                                ScheduleClass scheduleClass = UserData.scheduleClasses.get(k);
+                                                for(int l=0; l<UserData.scheduleClasses.get(k).timeCount(); l++){
+                                                    TimeClass timeClass = scheduleClass.getTime(l);
+                                                    //開始時間と終了時間が同じなら曜日のみ追加
+                                                    Calendar[] time = timeTableTime(TimeName);
+                                                    if(timeClass.getBeginTime().get(Calendar.HOUR_OF_DAY) == time[0].get(Calendar.HOUR_OF_DAY)
+                                                            && timeClass.getBeginTime().get(Calendar.MINUTE) == time[0].get(Calendar.MINUTE)
+                                                            && timeClass.getEndTime().get(Calendar.HOUR_OF_DAY) == time[1].get(Calendar.HOUR_OF_DAY)
+                                                            && timeClass.getEndTime().get(Calendar.MINUTE) == time[1].get(Calendar.MINUTE)){
+                                                        timeClass.setOneDay(true, i);
+                                                        scheduleClass.getTimes().set(l, timeClass);
+                                                        UserData.scheduleClasses.set(k, scheduleClass);
+                                                    }
+                                                    else if(l == UserData.scheduleClasses.get(k).timeCount()-1){
+                                                        TimeClass timeClass1 = new TimeClass();
+                                                        timeClass1.setBeginTime(time[0]);
+                                                        timeClass1.setEndTime(time[1]);
+                                                        scheduleClass.addTimes(timeClass1);
+                                                        UserData.scheduleClasses.set(k, scheduleClass);
+                                                    }
+                                                }
                                                 break;
                                             }
                                             else if(k == UserData.scheduleClasses.size()-1){
                                                 //ここに来るということは、同名のスケジュールは登録されていないということ！
                                                 ScheduleClass schedule = new ScheduleClass();
+                                                TimeClass timeClass = new TimeClass();
+                                                Calendar[] time = timeTableTime(TimeName);
+                                                timeClass.setBeginTime(time[0]);
+                                                timeClass.setEndTime(time[1]);
                                                 schedule.setName(Name);
-                                                schedule.setOneDay(true, i);
+                                                timeClass.setOneDay(true, i);
+                                                schedule.addTimes(timeClass);
                                                 UserData.scheduleClasses.add(schedule);
                                             }
                                         }
@@ -116,25 +148,52 @@ public class UnipaActivity extends AppCompatActivity {
         return sb.toString();
     }
 
-    public void addSchedule(JSONObject subject, int num){
-        try {
-            String TimeName = subject.getString("TimeName");
-            String Name = subject.getString("Name");
-
-            ScheduleClass schedule = new ScheduleClass();
-            schedule.setName(Name);
-            schedule.setOneDay(true, num);
-            schedule.setType(0);
-            //時間を決める際のswitch文
-            switch(TimeName){
-                case "J1限":
-                    break;
-            }
-            UserData.scheduleClasses.add(schedule);
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public Calendar[] timeTableTime(String TimeName){
+        Calendar[] time = new Calendar[2];
+        time[0] = Calendar.getInstance();
+        time[1] = Calendar.getInstance();
+        switch(TimeName){
+            case "J1限":
+                time = ScheduleRegistActivity.createCalendar(9, 10, 10, 00);
+                break;
+            case "J2限":
+                time = ScheduleRegistActivity.createCalendar(10, 10, 11, 00);
+                break;
+            case "J3限":
+                time = ScheduleRegistActivity.createCalendar(11, 10, 12, 00);
+                break;
+            case "J4限":
+                time = ScheduleRegistActivity.createCalendar(12, 40, 13, 30);
+                break;
+            case "J5限":
+                time = ScheduleRegistActivity.createCalendar(13, 40, 14, 30);
+                break;
+            case "J6限":
+                time = ScheduleRegistActivity.createCalendar(14, 40, 15, 30);
+                break;
+            case "J7限":
+                time = ScheduleRegistActivity.createCalendar(15, 40, 16, 30);
+                break;
+            case "J8限":
+                time = ScheduleRegistActivity.createCalendar(16, 40, 17, 30);
+                break;
+            case "1限":
+                time = ScheduleRegistActivity.createCalendar(9, 20, 11, 00);
+                break;
+            case "2限":
+                time = ScheduleRegistActivity.createCalendar(11, 10, 12, 50);
+                break;
+            case "3限":
+                time = ScheduleRegistActivity.createCalendar(13, 40, 15, 20);
+                break;
+            case "4限":
+                time = ScheduleRegistActivity.createCalendar(15, 30, 17, 10);
+                break;
+            case "5限":
+                time = ScheduleRegistActivity.createCalendar(17, 20, 19, 00);
+                break;
         }
-
+        return time;
     }
 
 }

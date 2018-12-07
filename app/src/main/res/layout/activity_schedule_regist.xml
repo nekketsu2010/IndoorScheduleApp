@@ -27,248 +27,38 @@
             android:hint="スケジュール名（講義名、ゼミなど）"
             android:inputType="textPersonName" />
 
-        <CheckBox
-            android:id="@+id/onceCheck"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="１回のみ" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/sun"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="日" />
-
-            <CheckBox
-                android:id="@+id/mon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="月" />
-
-            <CheckBox
-                android:id="@+id/tue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="火" />
-
-            <CheckBox
-                android:id="@+id/wed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="水" />
-
-            <CheckBox
-                android:id="@+id/thu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="木" />
-
-            <CheckBox
-                android:id="@+id/fri"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="金" />
-
-            <CheckBox
-                android:id="@+id/sat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="土" />
-        </LinearLayout>
-
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="時間設定"
             android:textAlignment="center"
             android:textSize="24sp" />
 
-        <RadioGroup
-            android:id="@+id/typeGroup"
+        <ListView
+            android:id="@+id/TimeList"
+            android:layout_width="match_parent"
+            android:layout_height="248dp"></ListView>
+
+        <Button
+            android:id="@+id/registTimeButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checkedButton="@+id/templateButton"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/templateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="テンプレートから" />
-
-            <RadioButton
-                android:id="@+id/pickerButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="時間ピッカーから" />
-        </RadioGroup>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:orientation="horizontal">
-
-            <RadioGroup
-                android:id="@+id/templateGroup"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:checkedButton="@+id/J1T"
-                android:visibility="visible">
-
-                <RadioButton
-                    android:id="@+id/J1T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環１時限" />
-
-                <RadioButton
-                    android:id="@+id/J2T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環２時限" />
-
-                <RadioButton
-                    android:id="@+id/J3T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環３時限" />
-
-                <RadioButton
-                    android:id="@+id/J4T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環４時限" />
-
-                <RadioButton
-                    android:id="@+id/J5T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環５時限" />
-
-                <RadioButton
-                    android:id="@+id/J6T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環６時限" />
-
-                <RadioButton
-                    android:id="@+id/J7T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環７時限" />
-
-                <RadioButton
-                    android:id="@+id/J8T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="情環８時限" />
-
-                <RadioButton
-                    android:id="@+id/S1T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="千住１時限" />
-
-                <RadioButton
-                    android:id="@+id/S2T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="千住２時限" />
-
-                <RadioButton
-                    android:id="@+id/S3T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="千住３時限" />
-
-                <RadioButton
-                    android:id="@+id/S4T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="千住４時限" />
-
-                <RadioButton
-                    android:id="@+id/S5T"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="千住５時限" />
-            </RadioGroup>
-
-            <LinearLayout
-                android:id="@+id/pickerGroup"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="開始時間"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-
-                <TimePicker
-                    android:id="@+id/beginTime_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:timePickerMode="spinner" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="終了時間 00:00"
-                    android:textAlignment="center"
-                    android:textSize="18sp" />
-
-                <TimePicker
-                    android:id="@+id/endTime_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:timePickerMode="spinner" />
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:onClick="addTimeButtonClicked"
+            android:text="時間を登録" />
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginTop="30dp"
             android:layout_marginRight="50dp"
             android:onClick="addButtonClicked"
-            android:text="追加"
+            android:text="スケジュールを登録"
             android:textSize="14sp" />
 
     </LinearLayout>

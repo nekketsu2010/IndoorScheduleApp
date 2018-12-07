@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -117,8 +118,26 @@ public class WifiService extends Service {
             httpResponsAsync.setListener(createListener());
             httpResponsAsync.execute(result);
 
-            //通知ができる状態なら通知する
+            //今日のカレンダーを取得しておく
+            Calendar today = Calendar.getInstance();
+            int dayofWeek = today.get(Calendar.DAY_OF_WEEK) - 1;
 
+            //通知ができる状態なら通知する（とりあえず一律１０分前に）
+            for(int i=0; i<UserData.scheduleClasses.size(); i++){
+                ScheduleClass scheduleClass = UserData.scheduleClasses.get(i);
+                for(int j=0; j<scheduleClass.getTimes().size(); j++){
+                    TimeClass timeClass = scheduleClass.getTime(j);
+                    //時間の曜日が今日と同じかどうか
+                    if(timeClass.getBeginTime().get(Calendar.DAY_OF_WEEK) == dayofWeek){
+                        //開始・終了時間の日付を今日にする
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.HOUR_OF_DAY, timeClass.getBeginTime().get(Calendar.HOUR_OF_DAY));
+                        calendar.set(Calendar.MINUTE, timeClass.getBeginTime().get(Calendar.MINUTE));
+                        //次に時間を見る（時）
+                        if()
+                    }
+                }
+            }
 
             // 検索時に呼ばれる BroadcastReceiver を登録
             registerReceiver(changeWifi,

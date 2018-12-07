@@ -1,6 +1,6 @@
 package com.indoorscheduleapp.nekketsu.indoorscheduleapp;
 
-import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
@@ -12,23 +12,42 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity{
 
     ListView listView;
+    ScheduleListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //部屋情報の読み込み
+        try {
+            InputStream is = this.getAssets().open("room_db.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String str;
+            while((str=br.readLine()) != null){
+                String[] csv = str.split(",");
+                RoomClass room = new RoomClass(csv[0], csv[1]);
+                ShareData.roomClasses.add(room);
+            }
+            is.close();
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Log.d("更新", "初回の更新だよ");
         listView = findViewById(R.id.listView);
-        ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
-//        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
+        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
 
@@ -42,14 +61,34 @@ public class MainActivity extends AppCompatActivity{
 
     private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
             // タップしたアイテムの取得
-            ListView listView = (ListView)parent;
+            final ListView listView = (ListView)parent;
             ScheduleClass item = (ScheduleClass) listView.getItemAtPosition(position);  // SampleListItemにキャスト
 
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Tap No. " + String.valueOf(position));
-            builder.setMessage(item.getName());
+            builder.setTitle(item.getName());
+            builder.setMessage("編集または削除");
+            builder.setPositiveButton("編集", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //編集ボタンを押したら
+                    Intent intent = new Intent(getApplication(), ScheduleRegistActivity.class);
+                    intent.putExtra("index", position);
+                    startActivityForResult(intent, 0);
+                }
+            });
+            builder.setNeutralButton("削除", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //削除ボタンを押したら
+                    UserData.scheduleClasses.remove(position);
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("完了")
+                            .setMessage("削除が完了しました");
+                    adapter.notifyDataSetChanged();
+                }
+            });
             builder.show();
         }
     };
@@ -57,8 +96,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         Log.d("更新", "リストを更新するよ");
-//        adapter.notifyDataSetChanged();
-        ScheduleListAdapter adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
+        adapter = new ScheduleListAdapter(this, R.layout.schedule_item, UserData.scheduleClasses);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(onItemClickListener);
     }
@@ -77,11 +115,11 @@ public class MainActivity extends AppCompatActivity{
         switch (item.getItemId()){
             case R.id.schedule:
                 Intent intent = new Intent(getApplication(), ScheduleRegistActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
                 return true;
             case R.id.unipa:
                 Intent intent1 = new Intent(getApplication(), UnipaActivity.class);
-                startActivity(intent1);
+                startActivityForResult(intent1, 0);
                 return true;
         }
         return super.onOptionsItemSelected(item);

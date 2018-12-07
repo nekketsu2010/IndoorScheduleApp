@@ -1,23 +1,15 @@
 package com.indoorscheduleapp.nekketsu.indoorscheduleapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class ScheduleClass {
+public class ScheduleClass implements Serializable {
     private String name;
-    private String roomName;
-    private int type = 0; //0:講義、1:スケジュール（ゼミなど）
-    private boolean isOnce = false; //１回のみかどうか
-    //isOnceがFalseのときつかうよ
-    private boolean[] day = new boolean[7]; //日～土　何曜日に発動するのか
 
-    //type=0のとき使用
-    private String timeTable; //千住１限　といった時間割の文字列
 
-    //type=1のとき使用
-    private Calendar beginTime = Calendar.getInstance();
-    private Calendar endTime = Calendar.getInstance();
+    private ArrayList<TimeClass> times = new ArrayList<>();
 
     private ArrayList<DocumentClass> documents = new ArrayList<>(); //資料のリスト
 
@@ -34,70 +26,16 @@ public class ScheduleClass {
         return this.name;
     }
 
-    public void setRoomName(String roomName)
-    {
-        this.roomName = roomName;
+    public void addTimes(TimeClass timeClass){
+        this.times.add(timeClass);
     }
-    public String getRoomName()
-    {
-        return roomName;
+    public TimeClass getTime(int num){
+        return times.get(num);
     }
+    public ArrayList<TimeClass> getTimes() { return times; }
 
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-    public int getType()
-    {
-        return type;
-    }
-
-    public void setOnce(boolean once) {
-        isOnce = once;
-    }
-    public boolean isOnce() {
-        return isOnce;
-    }
-
-    public void setDay(boolean[] day)
-    {
-        this.day = day;
-    }
-
-    public void setOneDay(boolean day, int num){
-        this.day[num] = day;
-    }
-
-    public boolean[] getDay()
-    {
-        return day;
-    }
-
-    public void setTimeTable(String timeTable)
-    {
-        this.timeTable = timeTable;
-    }
-    public String getTimeTable()
-    {
-        return timeTable;
-    }
-
-    public void setBeginTime(Calendar beginTime)
-    {
-        this.beginTime = beginTime;
-    }
-    public Calendar getBeginTime()
-    {
-        return beginTime;
-    }
-
-    public void setEndTime(Calendar endTime)
-    {
-        this.endTime = endTime;
-    }
-    public Calendar getEndTime()
-    {
-        return endTime;
+    public int timeCount(){
+        return times.size();
     }
 
     public void addDocument(DocumentClass document)
@@ -116,7 +54,7 @@ public class ScheduleClass {
     {
         documents.set(num,document);
     }
-    public int size()
+    public int documentCount()
     {
         return documents.size();
     }
