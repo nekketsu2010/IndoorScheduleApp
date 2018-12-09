@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
@@ -87,7 +88,21 @@ public class WifiService extends Service {
                 startForeground(1, notification);
             }
         }else{
-            showNotification(this,"Wifi取得中！", false);
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            int uuid = UUID.randomUUID().hashCode();
+            NotificationManager mgr = (NotificationManager)getApplication().getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification n = new NotificationCompat.Builder(getApplicationContext())
+                    .setSmallIcon(android.R.drawable.ic_media_play)
+                    .setTicker("サービスが起動しました。")
+                    .setWhen(System.currentTimeMillis())    // 時間
+                    .setContentTitle(title)
+                    .setContentText("Wifi取得中！")
+                    .setGroup(title)
+                    .setContentIntent(contentIntent)// インテント
+                    .build();
+            int flag = Notification.FLAG_NO_CLEAR;
+            n.flags = flag;
+            mgr.notify(uuid, n);
         }
 
         return START_NOT_STICKY;
@@ -128,13 +143,21 @@ public class WifiService extends Service {
                 for(int j=0; j<scheduleClass.getTimes().size(); j++){
                     TimeClass timeClass = scheduleClass.getTime(j);
                     //時間の曜日が今日と同じかどうか
-                    if(timeClass.getBeginTime().get(Calendar.DAY_OF_WEEK) == dayofWeek){
+                    if(timeClass.getDay()[dayofWeek]){
+                        Log.d("ok", "曜日一緒");
                         //開始・終了時間の日付を今日にする
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(Calendar.HOUR_OF_DAY, timeClass.getBeginTime().get(Calendar.HOUR_OF_DAY));
                         calendar.set(Calendar.MINUTE, timeClass.getBeginTime().get(Calendar.MINUTE));
-                        //次に時間を見る（時）
-                        if()
+                        //十分前に通知を出すということ
+                        long miliSecond = calendar.getTimeInMillis() - today.getTimeInMillis();
+                        long second = miliSecond/1000;
+                        Log.d("ok", String.valueOf(second));
+                        if(second < 660 && !timeClass.getNotice()){
+                            showNotification(getApplicationContext(), timeClass.getRoomName() + "\n" + scheduleClass.getName() + " １０分前", true);
+                            timeClass.setNotice(true);
+//                            UserData.scheduleClasses.get(i).getTimes().set(j, timeClass);
+                        }
                     }
                 }
             }
@@ -164,8 +187,8 @@ public class WifiService extends Service {
                         Log.d("room", line.split(",")[1]);
                         if(roomNumber.equals(line.split(",")[0])){
                             //部屋名をとりあえずログで出力
-                            Log.d("roomName", line.split(",")[1]);
-                            showNotification(getApplicationContext(), line.split(",")[1], true);
+//                            Log.d("roomName", line.split(",")[1]);
+//                            showNotification(getApplicationContext(), line.split(",")[1], true);
                             break;
                         }
                     }
@@ -207,7 +230,9 @@ public class WifiService extends Service {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             channel = new NotificationChannel(
                     channelId, title , NotificationManager.IMPORTANCE_DEFAULT);
-
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+            channel.setShowBadge(true);
             if(notificationManager != null){
                 notificationManager.createNotificationChannel(channel);
 
@@ -239,6 +264,8 @@ public class WifiService extends Service {
                     .setContentText(content)
                     .setGroup(title)
                     .setContentIntent(contentIntent)// インテント
+                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                    .setVisibility(Notification.VISIBILITY_PUBLIC)
                     .build();
             int flag = Notification.FLAG_NO_CLEAR;
             if(erasable){

@@ -154,43 +154,43 @@ public class UnipaActivity extends AppCompatActivity {
         time[1] = Calendar.getInstance();
         switch(TimeName){
             case "J1限":
-                time = ScheduleRegistActivity.createCalendar(9, 10, 10, 00);
+                time = Utility.createCalendar(9, 10, 10, 00);
                 break;
             case "J2限":
-                time = ScheduleRegistActivity.createCalendar(10, 10, 11, 00);
+                time = Utility.createCalendar(10, 10, 11, 00);
                 break;
             case "J3限":
-                time = ScheduleRegistActivity.createCalendar(11, 10, 12, 00);
+                time = Utility.createCalendar(11, 10, 12, 00);
                 break;
             case "J4限":
-                time = ScheduleRegistActivity.createCalendar(12, 40, 13, 30);
+                time = Utility.createCalendar(12, 40, 13, 30);
                 break;
             case "J5限":
-                time = ScheduleRegistActivity.createCalendar(13, 40, 14, 30);
+                time = Utility.createCalendar(13, 40, 14, 30);
                 break;
             case "J6限":
-                time = ScheduleRegistActivity.createCalendar(14, 40, 15, 30);
+                time = Utility.createCalendar(14, 40, 15, 30);
                 break;
             case "J7限":
-                time = ScheduleRegistActivity.createCalendar(15, 40, 16, 30);
+                time = Utility.createCalendar(15, 40, 16, 30);
                 break;
             case "J8限":
-                time = ScheduleRegistActivity.createCalendar(16, 40, 17, 30);
+                time = Utility.createCalendar(16, 40, 17, 30);
                 break;
             case "1限":
-                time = ScheduleRegistActivity.createCalendar(9, 20, 11, 00);
+                time = Utility.createCalendar(9, 20, 11, 00);
                 break;
             case "2限":
-                time = ScheduleRegistActivity.createCalendar(11, 10, 12, 50);
+                time = Utility.createCalendar(11, 10, 12, 50);
                 break;
             case "3限":
-                time = ScheduleRegistActivity.createCalendar(13, 40, 15, 20);
+                time = Utility.createCalendar(13, 40, 15, 20);
                 break;
             case "4限":
-                time = ScheduleRegistActivity.createCalendar(15, 30, 17, 10);
+                time = Utility.createCalendar(15, 30, 17, 10);
                 break;
             case "5限":
-                time = ScheduleRegistActivity.createCalendar(17, 20, 19, 00);
+                time = Utility.createCalendar(17, 20, 19, 00);
                 break;
         }
         return time;

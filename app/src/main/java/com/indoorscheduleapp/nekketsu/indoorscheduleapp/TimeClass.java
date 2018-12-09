@@ -18,6 +18,9 @@ public class TimeClass implements Serializable {
     private Calendar beginTime = Calendar.getInstance();
     private Calendar endTime = Calendar.getInstance();
 
+    //通知をしたかどうか（通知は一日一回）
+    private boolean isNotice = false;
+
     public TimeClass(){
         beginTime.set(Calendar.HOUR_OF_DAY, 23);
     }
@@ -84,5 +87,12 @@ public class TimeClass implements Serializable {
 
     public Calendar getEndTime() {
         return endTime;
+    }
+
+    public void setNotice(boolean notice) {
+        isNotice = notice;
+    }
+    public boolean getNotice() {
+        return isNotice;
     }
 }
