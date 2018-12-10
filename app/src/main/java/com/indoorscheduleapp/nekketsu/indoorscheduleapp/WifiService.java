@@ -275,4 +275,10 @@ public class WifiService extends Service {
             mgr.notify(uuid, n);
         }
     }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        startService(new Intent(this, WifiService.class));
+    }
 }

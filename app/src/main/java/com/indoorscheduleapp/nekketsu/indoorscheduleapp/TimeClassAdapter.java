@@ -58,7 +58,7 @@ public class TimeClassAdapter extends ArrayAdapter<TimeClass> {
         }
         //開始時間～終了時間
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        text += " " + sdf.format(item.getBeginTime().getTime()) + "～" + sdf.format(item.getEndTime().getTime());
+        text += " " + sdf.format(item.getBeginTime().getTime()) + "～" + sdf.format(item.getEndTime().getTime()) + item.getRoomName();
         //UNIPAからだったとき
         if(item.getType()==0){
             text += " " + getContext().getString(R.string.fromUNIPA);
