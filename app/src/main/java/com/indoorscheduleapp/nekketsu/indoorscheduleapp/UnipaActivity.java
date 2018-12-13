@@ -43,7 +43,7 @@ public class UnipaActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("http://d0259c06.ngrok.io//sample-game-server/unipa_load?user_id=" + user_id.getText().toString() + "&password=" + password.getText().toString());
+                    URL url = new URL(ShareData.url + "unipa_load?user_id=" + user_id.getText().toString() + "&password=" + password.getText().toString());
                     HttpURLConnection con = (HttpURLConnection)url.openConnection();
                     final String str = InputStreamToString(con.getInputStream());
                     Log.d("HTTP", str);

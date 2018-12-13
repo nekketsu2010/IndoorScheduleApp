@@ -10,11 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -158,6 +161,34 @@ public class WifiService extends Service {
                             timeClass.setNotice(true);
 //                            UserData.scheduleClasses.get(i).getTimes().set(j, timeClass);
                         }
+                        //定刻になったら出席処理と資料自動オープン
+                        if(second <= 0 && !scheduleClass.getIsClass()){
+                            Log.d("いくぞ", "出席だ");
+                            scheduleClass.setIsClass(true); //出席
+
+                            //講義資料自動オープン
+                            //インテントを生成
+//                            Intent intent1 = new Intent(Intent.ACTION_VIEW);
+//                            //開くファイル
+//                            Uri data = scheduleClass.getDocument(0).getUri();
+//                            String path = Environment.getExternalStorageDirectory() + "/" + scheduleClass.getDocument(0).getDocumentPass();
+//                            //拡張子
+//                            String extention = MimeTypeMap.getFileExtensionFromUrl(path);
+//                            //mime type
+//                            String mimetype =MimeTypeMap.getSingleton().getMimeTypeFromExtension(extention);
+//                            //URLとmimetypeを取得
+//                            intent1.setDataAndType(Uri.parse(path), mimetype);
+//                            //別タスクで実行するためのおまじない。
+//                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+//                            // Start！
+//                            context.startActivity(intent1);
+
+//                            Uri uri = scheduleClass.getDocument(0).getUri();
+                            Uri uri = Uri.parse("http://www.google.com");
+                            Intent intent1 = new Intent(Intent.ACTION_VIEW,uri);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent1);
+                        }
                     }
                 }
             }
@@ -176,7 +207,12 @@ public class WifiService extends Service {
                 //ここで部屋番号が文字列型で戻る(ex.51018.0)
                 Log.d("返却値", result);
                 result = result.trim();
-                double resultDouble = Double.parseDouble(result);
+                double resultDouble = 0;
+                try{
+                    resultDouble = Double.parseDouble(result);
+                }catch(NumberFormatException e){
+                    return;
+                }
                 int resultInt = (int)resultDouble;
                 String roomNumber = String.valueOf(resultInt);
                 try {

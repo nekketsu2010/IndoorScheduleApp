@@ -2,6 +2,7 @@ package com.indoorscheduleapp.nekketsu.indoorscheduleapp;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,13 +17,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ScheduleRegistActivity extends AppCompatActivity{
+    private static final int RESULT_PICK_IMAGEFILE = 1000;
 
     private ScheduleClass schedule = new ScheduleClass();
     private int num;
@@ -31,6 +35,8 @@ public class ScheduleRegistActivity extends AppCompatActivity{
     private Button addButton;
 
     private EditText scheduleNameText;
+
+    private TextView fileNameText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,8 @@ public class ScheduleRegistActivity extends AppCompatActivity{
         //はじめ追加ボタンを押せなくしておく
         addButton.setEnabled(false);
 
+        fileNameText = findViewById(R.id.fileName);
+
         //MainActivityからscheduleが送られてきたら代入する（送られてくるのはインデックスのみ）
         Intent intent = getIntent();
         num = intent.getIntExtra("index", -1);
@@ -69,6 +77,9 @@ public class ScheduleRegistActivity extends AppCompatActivity{
             scheduleNameText.setText(schedule.getName());
             TimeClassAdapter adapter = new TimeClassAdapter(this, R.layout.time_item, schedule.getTimes());
             TimeList.setAdapter(adapter);
+            if(schedule.documentCount() != 0){
+                fileNameText.setText(schedule.getDocument(0).getDocumentName());
+            }
         }
 
         //生成したscheduleのTimeClassのリストを反映
@@ -130,8 +141,40 @@ public class ScheduleRegistActivity extends AppCompatActivity{
                     //その他
                 }
                 break;
+            case(RESULT_PICK_IMAGEFILE):
+                if(resultCode == RESULT_OK){
+                    Uri uri = null;
+                    if (data != null) {
+                        uri = data.getData();
+                        DocumentClass document = new DocumentClass();
+                        int length = uri.getPath().split("/").length-1;
+                        Log.d("FileName", uri.getPath().split("/")[length]);
+                        Log.d("FilePass", uri.getPath().split(":")[1]);
+                        document.setDocumentName(uri.getPath().split("/")[length]);
+                        document.setDocumentPass(uri.getPath().split(":")[1]);
+                        document.setUri(uri);
+                        for(int i=0; i<schedule.documentCount(); i++){
+                            schedule.removeDocument(i);
+                        }
+                        schedule.addDocument(document);
+                        fileNameText.setText(document.getDocumentName());
+                        try {
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                break;
             default:
                 break;
         }
+    }
+
+    //講義資料追加ボタンを押したとき
+    public void addDocumentButtonClicked(View view){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(intent, RESULT_PICK_IMAGEFILE);
     }
 }
