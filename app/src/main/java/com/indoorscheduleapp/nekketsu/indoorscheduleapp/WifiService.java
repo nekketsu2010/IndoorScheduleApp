@@ -223,8 +223,8 @@ public class WifiService extends Service {
                         Log.d("room", line.split(",")[1]);
                         if(roomNumber.equals(line.split(",")[0])){
                             //部屋名をとりあえずログで出力
-//                            Log.d("roomName", line.split(",")[1]);
-//                            showNotification(getApplicationContext(), line.split(",")[1], true);
+                            Log.d("roomName", line.split(",")[1]);
+                            showNotification(getApplicationContext(), line.split(",")[1], true);
                             break;
                         }
                     }
